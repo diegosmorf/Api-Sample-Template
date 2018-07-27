@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contract\**" />
+    <EmbeddedResource Remove="Contract\**" />
+    <None Remove="Contract\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="7.6.104" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Api.Cqrs.Core\Api.Cqrs.Core.csproj" />
+    <ProjectReference Include="..\Api.Domain.Contracts.Core\Api.Domain.Contracts.Core.csproj" />
+  </ItemGroup>
+
+</Project>
