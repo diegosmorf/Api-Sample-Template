@@ -1,10 +1,9 @@
 ﻿using Api.Cqrs.Core.Bus;
-using MediatR;
 using System;
 
 namespace Api.Cqrs.Core.Events
 {
-    public abstract class Event : Message, IEvent, INotification
+    public abstract class Event : Message, IEvent
     {
         public Guid Id { get; protected set; }
         public DateTime CreatedDate { get; protected set; }

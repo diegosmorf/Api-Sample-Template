@@ -4,18 +4,19 @@ namespace Api.Cqrs.Core.Bus
 {
     public abstract class Message : IMessage
     {
-        public string MessageType { get; protected set; }
-       
+        public Guid MessageId { get; protected set; }
+        public string MessageType { get; protected set; }       
         public DateTime Timestamp { get; protected set; }
         protected Message()
         {
+            MessageId = Guid.NewGuid();
             MessageType = GetType().Name;
             Timestamp = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return $"MessageType:{MessageType} TimeStamp:{Timestamp}";
+            return $"MessageId:{MessageId} - MessageType:{MessageType} - TimeStamp:{Timestamp}";
         }
     }
 }

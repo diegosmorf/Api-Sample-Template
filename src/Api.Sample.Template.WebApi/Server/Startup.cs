@@ -1,21 +1,16 @@
-﻿using Api.Cqrs.Core.CommandHandlers;
-using Api.Sample.Template.Domain.CommandHandlers;
-using Api.Sample.Template.Dummy.Infrastructure.InjectionModules;
+﻿using Api.Sample.Template.Dummy.Infrastructure.InjectionModules;
 using Api.Sample.Template.Infrastructure.Database.Migrations;
 using Api.Sample.Template.WebApi.Configurations;
 using FluentMigrator.Runner;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Api.Sample.Template.WebApi.Server
 {
@@ -26,32 +21,35 @@ namespace Api.Sample.Template.WebApi.Server
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+                    .SetBasePath(env.ContentRootPath)
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                    .AddEnvironmentVariables();
 
-            builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // IoC Container registration
+            builder.RegisterModule(new MockInjectionModule());
+        }
+
 
         public void ConfigureServices(IServiceCollection services)
         {
             //TODO: Register Database Context
 
             services.AddAutoMapperSetup();
-            services.AddMvc();
+
+            services.AddMvc()
+                    .AddControllersAsServices();
 
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new Info { Title = "Api.Sample.Template Swagger Documentation" });
             });
 
-            // Adding MediatR for Domain Events and Notifications 
-            //services.AddMediatR(AppDomain.CurrentDomain.Load("Api.Sample.Template.Domain"));           
-            services.AddMediatR();
-
-            // IoC Container registration
-            MockInjectionModule.RegisterServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,24 +60,21 @@ namespace Api.Sample.Template.WebApi.Server
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-            
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=HealthCheck}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseCors(builder =>
                 builder.AllowAnyOrigin()
                        .AllowAnyHeader()
                        .AllowAnyMethod());
-            
+
             // Enable middleware to serve generated Swagger as a JSON endpoint
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = "swagger/{documentName}/swagger.json";
-            });
+            app.UseSwagger(c => { c.RouteTemplate = "swagger/{documentName}/swagger.json"; });
 
             // Enable middleware to serve swagger-ui assets(HTML, JS, CSS etc.)
             app.UseSwaggerUI(x =>
@@ -88,16 +83,16 @@ namespace Api.Sample.Template.WebApi.Server
             });
 
             //Execute Database Migration
-            //UpdateDatabase();
+            //UpdateDatabase("");
         }
 
-        private static void UpdateDatabase()
-        {
+        private static void UpdateDatabase(string connectionString)
+        {            
             var serviceProvider = new ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
                     .AddSqlServer()
-                    .WithGlobalConnectionString("Data Source=test.db")
+                    .WithGlobalConnectionString(connectionString)
                     .ScanIn(typeof(Migration_20180726090000_CreateInitialTables).Assembly)
                     .For.Migrations())
                             .AddLogging(lb => lb.AddFluentMigratorConsole())

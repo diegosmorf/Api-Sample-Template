@@ -37,12 +37,16 @@ namespace Api.Sample.Template.ApplicationService.Services
 
         public FundViewModel Create(CreateFundCommand command)
         {
-            return mapper.Map<FundViewModel>(bus.DispatchCommand(command));
+            return mapper
+                    .Map<FundViewModel>(
+                        bus.DispatchCommand<CreateFundCommand,Fund>(command).Result);
         }
 
         public FundViewModel Update(UpdateFundCommand command)
         {
-            return mapper.Map<FundViewModel>(bus.DispatchCommand(command));
+            return mapper
+                .Map<FundViewModel>(
+                    bus.DispatchCommand<UpdateFundCommand, Fund>(command).Result);
         }
 
         public bool Delete(Guid id)

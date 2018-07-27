@@ -1,28 +1,31 @@
 ﻿using Api.Cqrs.Core.Bus;
 using Api.Cqrs.Core.Commands;
 using Api.Cqrs.Core.Events;
-using MediatR;
+using Autofac;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Api.Cqrs.Core.CommandHandlers;
+using Api.Domain.Contracts.Core.Entities;
 
 namespace Api.Sample.Template.Dummy.Infrastructure.Bus
 {
     public class InMemoryMessageBus : IMessageBus
     {
-        private readonly IMediator mediator;        
+        private readonly IComponentContext context;
 
-        public InMemoryMessageBus(IMediator mediator)
+        public InMemoryMessageBus(IComponentContext context)
         {
-            this.mediator = mediator;
+            this.context = context;
         }
-
-        public Task DispatchCommand<TCommand>(TCommand command) where TCommand : ICommand
+        
+        public Task<TEntity> DispatchCommand<TCommand, TEntity>(TCommand command) where TCommand : ICommand where TEntity: IDomainEntity
         {
-           return mediator.Send(command);
+            return context.Resolve<ICommandHandler<TCommand,TEntity>>().Handle(command);            
         }
 
         public Task PublishEvent<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            return mediator.Publish(@event);
+            return context.Resolve<IEventHandler<TEvent>>().Handle(@event);
         }
     }
 }

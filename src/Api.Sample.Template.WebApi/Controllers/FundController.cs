@@ -1,10 +1,7 @@
 ﻿using System;
 using Api.Cqrs.Core.Bus;
-using Api.Cqrs.Core.Notifications;
 using Api.Sample.Template.ApplicationService.Interfaces;
-using Api.Sample.Template.ApplicationService.ViewModels;
 using Api.Sample.Template.Domain.Commands;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

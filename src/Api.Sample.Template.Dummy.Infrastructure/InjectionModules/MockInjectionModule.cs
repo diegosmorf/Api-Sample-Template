@@ -1,5 +1,5 @@
 ﻿using Api.Cqrs.Core.Bus;
-using Api.Cqrs.Core.Notifications;
+using Api.Cqrs.Core.Events;
 using Api.Cqrs.Template.Core.Contract.Repository;
 using Api.Sample.Template.ApplicationService.Interfaces;
 using Api.Sample.Template.ApplicationService.Services;
@@ -10,39 +10,46 @@ using Api.Sample.Template.Domain.Events;
 using Api.Sample.Template.Domain.Model;
 using Api.Sample.Template.Dummy.Infrastructure.Bus;
 using Api.Sample.Template.Dummy.Infrastructure.Data.Repositories;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Api.Cqrs.Core.CommandHandlers;
 
 namespace Api.Sample.Template.Dummy.Infrastructure.InjectionModules
 {
-    public class MockInjectionModule
+    public class MockInjectionModule : Module
     {
-        public static void RegisterServices(IServiceCollection services)
-        {
+        protected override void Load(ContainerBuilder builder)
+        {            
             // ASP.NET HttpContext dependency
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
 
-            // Service Bus
-            services.AddScoped<IMessageBus, InMemoryMessageBus>();
+            // Service Bus            
+            builder.RegisterType<InMemoryMessageBus>().As<IMessageBus>();
 
-            // Application
-            services.AddScoped<IFundAppService, FundAppService>();
+            // Application            
+            builder.RegisterType<FundAppService>().As<IFundAppService>();
 
-            // Domain - EventsHandlers
-            //services.AddScoped<INotificationHandler<DomainNotification>, DomainNotificationHandler>();
-            services.AddScoped<INotificationHandler<FundCreatedEvent>, FundCreatedEventHandler>();
+            // Domain - EventsHandlers                        
+            builder.RegisterType<FundCreatedEventHandler>().As<IEventHandler<FundCreatedEvent>>();
 
             // Domain - CommandsHandlers
-            services.AddScoped<IRequestHandler<CreateFundCommand,Fund>, CreateFundCommandHandler>();
+            builder.RegisterType<CreateFundCommandHandler>().As<ICommandHandler<CreateFundCommand, Fund>>();
 
             // Domain - Commands
-            services.AddScoped<IRequest<Fund>, CreateFundCommand>();
+            builder.RegisterType<CreateFundCommand>().AsImplementedInterfaces();
 
-            // Infra - Data            
-            services.AddSingleton<IRepository<Fund>, InMemoryRepository<Fund>>();
-            services.AddSingleton<IUnitOfWork, InMemoryUnitOfWork>();
+            // Domain - Events
+            builder.RegisterType<FundCreatedEvent>().AsImplementedInterfaces();
 
+            // Infra - Data   
+            builder.RegisterType<InMemoryUnitOfWork>().As<IUnitOfWork>();
+
+            builder
+                .RegisterGeneric(typeof(InMemoryRepository<>))
+                .AsImplementedInterfaces()
+                .SingleInstance();            
         }
     }
 }

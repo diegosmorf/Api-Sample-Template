@@ -1,11 +1,13 @@
 ﻿using Api.Cqrs.Core.Commands;
-using MediatR;
+using Api.Domain.Contracts.Core.Entities;
 using System.Threading.Tasks;
 
 namespace Api.Cqrs.Core.CommandHandlers
 {
-    public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand> where TCommand : ICommand
+    public interface ICommandHandler<in TCommand, TDomainEntity> 
+        where TCommand : ICommand  
+        where TDomainEntity: IDomainEntity
     {   
-        Task Handle(TCommand message);
+        Task<TDomainEntity> Handle(TCommand command);
     }
 }

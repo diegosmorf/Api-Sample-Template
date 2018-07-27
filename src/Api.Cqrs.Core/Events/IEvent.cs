@@ -1,9 +1,8 @@
 ﻿using Api.Cqrs.Core.Bus;
-using MediatR;
 
 namespace Api.Cqrs.Core.Events
 {
-    public interface IEvent : IMessage, INotification
+    public interface IEvent : IMessage
     {        
         int Version { get; }
     }

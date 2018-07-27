@@ -8,7 +8,7 @@ namespace Api.Sample.Template.WebApi
     {
         public static void Main(string[] args)
         {
-            WebHost.CreateDefaultBuilder(args)
+            WebHost.CreateDefaultBuilder(args)                
                 .UseStartup<Startup>()
                 .Build()
                 .Run();
