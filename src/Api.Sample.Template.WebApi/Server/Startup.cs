@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
+using Api.Sample.Template.Dummy.ApplicationService.InjectionModules;
 
 namespace Api.Sample.Template.WebApi.Server
 {
@@ -31,25 +31,23 @@ namespace Api.Sample.Template.WebApi.Server
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            // IoC Container registration
-            builder.RegisterModule(new MockInjectionModule());
+            // IoC Container Module Registration
+            builder.RegisterModule(new AppServiceIoCModule());
+            builder.RegisterModule(new DummyInfraIoCModule());
         }
-
 
         public void ConfigureServices(IServiceCollection services)
         {
             //TODO: Register Database Context
 
+            services.AddMvc();
+            //services.AddAutofac();
             services.AddAutoMapperSetup();
-
-            services.AddMvc()
-                    .AddControllersAsServices();
-
+            
             services.AddSwaggerGen(s =>
             {
                 s.SwaggerDoc("v1", new Info { Title = "Api.Sample.Template Swagger Documentation" });
             });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,16 +56,13 @@ namespace Api.Sample.Template.WebApi.Server
                               ILoggerFactory loggerFactory,
                               IHttpContextAccessor accessor)
         {
+            //
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseMvc();
 
+            //Enable Cors
             app.UseCors(builder =>
                 builder.AllowAnyOrigin()
                        .AllowAnyHeader()
@@ -87,7 +82,7 @@ namespace Api.Sample.Template.WebApi.Server
         }
 
         private static void UpdateDatabase(string connectionString)
-        {            
+        {
             var serviceProvider = new ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb

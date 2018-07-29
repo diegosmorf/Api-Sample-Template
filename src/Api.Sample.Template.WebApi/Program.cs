@@ -1,6 +1,8 @@
 ﻿using Api.Sample.Template.WebApi.Server;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using Autofac.Extensions.DependencyInjection;
 
 namespace Api.Sample.Template.WebApi
 {
@@ -8,8 +10,10 @@ namespace Api.Sample.Template.WebApi
     {
         public static void Main(string[] args)
         {
-            WebHost.CreateDefaultBuilder(args)                
-                .UseStartup<Startup>()
+            WebHost.CreateDefaultBuilder(args)
+                .ConfigureServices(s => s.AddAutofac())
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseStartup<Startup>()                
                 .Build()
                 .Run();
         }    

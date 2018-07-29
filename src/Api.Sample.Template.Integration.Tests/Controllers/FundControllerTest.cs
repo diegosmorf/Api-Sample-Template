@@ -10,7 +10,7 @@ using FluentAssertions;
 namespace Api.Sample.Template.Integration.Tests.Controllers
 {
     [TestFixture]
-    public class FundControllerTest : SimpleControllerTest
+    public class FundControllerTest : ApiControllerTest
     {
         [Test]
         public async Task WhenGetFund_Then_ReturnViewModelWithId()
@@ -37,8 +37,10 @@ namespace Api.Sample.Template.Integration.Tests.Controllers
             // Assert
             responseCreate.StatusCode.Should().Equals(HttpStatusCode.OK);
             viewModelCreate.Should().BeOfType<FundViewModel>();
+
             responseGet.StatusCode.Should().Equals(HttpStatusCode.OK);
             viewModelGet.Should().BeOfType<FundViewModel>();
+
             viewModelGet.Name.Should().Equals(expectedName);
             viewModelGet.Description.Should().Equals(expectedDescription);
             

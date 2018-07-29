@@ -6,12 +6,13 @@ using System.ComponentModel.DataAnnotations;
 namespace Api.Sample.Template.Domain.Commands
 {
     public class UpdateFundCommand : Command
-    {       
-        public UpdateFundCommand(Guid id, string name, string description)
+    {
+        public UpdateFundCommand(Guid id, string name, string description, string senderUserName)
         {
             Id = id;
             Name = name;
             Description = description;
+            SenderUserName = senderUserName;
         }
 
         [Key]

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace Api.Sample.Template.WebApi.Controllers
 {
+    [Route("api/[controller]")]
     public class HealthCheckController : Controller
     {
         private readonly IMessageBus bus;

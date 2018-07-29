@@ -17,18 +17,25 @@ namespace Api.Sample.Template.Domain.Model
             Name = command.Name;
             Description = command.Description;
             CreatedDate = DateTime.Now;
-            ModifiedBy = "";
+            ModifiedBy = command.SenderUserName;
 
             appliedEvents.Add(new FundCreatedEvent(Id, Name, Description, CreatedDate, ModifiedDate, ModifiedBy));
         }
-
-        public void Update(Guid id, string name, string description, string userName)
+        
+        public void Update(UpdateFundCommand command)
         {
-            Id = id;
-            Name = name;
-            Description = description;
+            Name = command.Name;
+            Description = command.Description;
             ModifiedDate = DateTime.Now;
-            ModifiedBy = userName;
+            ModifiedBy = command.SenderUserName;
+
+            appliedEvents.Add(new FundUpdatedEvent(Id, Name, Description, CreatedDate, ModifiedDate, ModifiedBy));
+        }
+
+        public void Delete(DeleteFundCommand command)
+        {
+            ModifiedBy = command.SenderUserName;
+            appliedEvents.Add(new FundDeletedEvent(Id, ModifiedBy));
         }
     }
 }
