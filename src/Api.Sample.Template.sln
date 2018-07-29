@@ -29,10 +29,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Sample.Template.Domain"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Cqrs.Core", "Api.Cqrs.Core\Api.Cqrs.Core.csproj", "{488975A0-E2B9-4DAA-A88A-283A2F470FAB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Auth.Core", "Api.Auth.Core\Api.Auth.Core.csproj", "{E8FF96F3-0A49-48CA-A4E5-198D95950057}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Logger.Core", "Api.Logger.Core\Api.Logger.Core.csproj", "{4E3FA616-9B7F-4C80-9DD7-04027AD24D88}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api.Sample.Template.Acceptance.Tests", "Api.Sample.Template.Acceptance.Tests\Api.Sample.Template.Acceptance.Tests.csproj", "{10BC99C0-1F22-423E-81F3-038B5C9159AA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Domain.Contracts.Core", "Api.Domain.Contracts.Core\Api.Domain.Contracts.Core.csproj", "{B4E171B6-C2EC-4D6A-913D-A253DADD7F09}"
