@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Api.Sample.Template.Dummy.Infrastructure.Data.Repositories
+namespace Api.Sample.Template.Mock.Infrastructure.Data.Repositories
 {
     public class InMemoryRepository<TEntity> : IRepository<TEntity> where TEntity : IDomainEntity
     {

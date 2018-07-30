@@ -1,4 +1,4 @@
-﻿using Api.Sample.Template.Dummy.Infrastructure.InjectionModules;
+﻿using Api.Sample.Template.Mock.Infrastructure.InjectionModules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Autofac;
-using Api.Sample.Template.Dummy.ApplicationService.InjectionModules;
+using Api.Sample.Template.Mock.ApplicationService.InjectionModules;
 using Api.Sample.Template.Integration.Tests.Configurations;
 
 namespace Api.Sample.Template.Integration.Tests
@@ -30,7 +30,7 @@ namespace Api.Sample.Template.Integration.Tests
         {
             // IoC Container Module Registration
             builder.RegisterModule(new IoCModuleApplicationService());
-            builder.RegisterModule(new DummyInfraIoCModule());
+            builder.RegisterModule(new IoCModuleMockInfra());
         }
 
         public void ConfigureServices(IServiceCollection services)

@@ -1,4 +1,4 @@
-﻿using Api.Sample.Template.Dummy.Infrastructure.InjectionModules;
+﻿using Api.Sample.Template.Mock.Infrastructure.InjectionModules;
 using Api.Sample.Template.WebApi.Configurations;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Autofac;
-using Api.Sample.Template.Dummy.ApplicationService.InjectionModules;
+using Api.Sample.Template.Mock.ApplicationService.InjectionModules;
 using Api.Sample.Template.Database.Migrations;
 
 namespace Api.Sample.Template.WebApi.Server
@@ -33,7 +33,7 @@ namespace Api.Sample.Template.WebApi.Server
         {
             // IoC Container Module Registration
             builder.RegisterModule(new IoCModuleApplicationService());
-            builder.RegisterModule(new DummyInfraIoCModule());
+            builder.RegisterModule(new IoCModuleMockInfra());
         }
 
         public void ConfigureServices(IServiceCollection services)

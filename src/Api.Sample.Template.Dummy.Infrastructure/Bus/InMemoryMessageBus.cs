@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Api.Cqrs.Core.CommandHandlers;
 using Api.Domain.Contracts.Core.Entities;
 
-namespace Api.Sample.Template.Dummy.Infrastructure.Bus
+namespace Api.Sample.Template.Mock.Infrastructure.Bus
 {
     public class InMemoryMessageBus : IMessageBus
     {

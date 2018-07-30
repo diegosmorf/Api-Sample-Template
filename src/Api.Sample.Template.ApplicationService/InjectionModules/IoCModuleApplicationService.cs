@@ -9,7 +9,7 @@ using Api.Sample.Template.Domain.Model;
 using Autofac;
 using Api.Cqrs.Core.CommandHandlers;
 
-namespace Api.Sample.Template.Dummy.ApplicationService.InjectionModules
+namespace Api.Sample.Template.Mock.ApplicationService.InjectionModules
 {
     public class IoCModuleApplicationService : Module
     {

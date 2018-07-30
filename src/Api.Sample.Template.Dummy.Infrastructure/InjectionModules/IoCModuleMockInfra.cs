@@ -1,13 +1,13 @@
 ﻿using Api.Cqrs.Core.Bus;
 using Api.Cqrs.Template.Core.Contract.Repository;
-using Api.Sample.Template.Dummy.Infrastructure.Bus;
-using Api.Sample.Template.Dummy.Infrastructure.Data.Repositories;
+using Api.Sample.Template.Mock.Infrastructure.Bus;
+using Api.Sample.Template.Mock.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Http;
 using Autofac;
 
-namespace Api.Sample.Template.Dummy.Infrastructure.InjectionModules
+namespace Api.Sample.Template.Mock.Infrastructure.InjectionModules
 {
-    public class DummyInfraIoCModule : Module
+    public class IoCModuleMockInfra : Module
     {
         protected override void Load(ContainerBuilder builder)
         {            

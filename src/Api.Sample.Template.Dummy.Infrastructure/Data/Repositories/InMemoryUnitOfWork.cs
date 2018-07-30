@@ -1,7 +1,7 @@
 ﻿using Api.Cqrs.Template.Core.Contract.Repository;
 using System;
 
-namespace Api.Sample.Template.Dummy.Infrastructure.Data.Repositories
+namespace Api.Sample.Template.Mock.Infrastructure.Data.Repositories
 {
     public class InMemoryUnitOfWork : IUnitOfWork
     {
