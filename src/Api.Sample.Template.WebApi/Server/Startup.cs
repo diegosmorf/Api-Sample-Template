@@ -1,5 +1,4 @@
 ﻿using Api.Sample.Template.Dummy.Infrastructure.InjectionModules;
-using Api.Sample.Template.Infrastructure.Database.Migrations;
 using Api.Sample.Template.WebApi.Configurations;
 using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using Autofac;
 using Api.Sample.Template.Dummy.ApplicationService.InjectionModules;
+using Api.Sample.Template.Database.Migrations;
 
 namespace Api.Sample.Template.WebApi.Server
 {
@@ -32,7 +32,7 @@ namespace Api.Sample.Template.WebApi.Server
         public void ConfigureContainer(ContainerBuilder builder)
         {
             // IoC Container Module Registration
-            builder.RegisterModule(new AppServiceIoCModule());
+            builder.RegisterModule(new IoCModuleApplicationService());
             builder.RegisterModule(new DummyInfraIoCModule());
         }
 
@@ -88,7 +88,7 @@ namespace Api.Sample.Template.WebApi.Server
                 .ConfigureRunner(rb => rb
                     .AddSqlServer()
                     .WithGlobalConnectionString(connectionString)
-                    .ScanIn(typeof(Migration_20180726090000_CreateInitialTables).Assembly)
+                    .ScanIn(typeof(M00000_EmptyDatabase).Assembly)
                     .For.Migrations())
                             .AddLogging(lb => lb.AddFluentMigratorConsole())
                             .BuildServiceProvider(false);

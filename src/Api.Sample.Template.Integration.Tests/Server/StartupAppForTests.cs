@@ -29,7 +29,7 @@ namespace Api.Sample.Template.Integration.Tests
         public void ConfigureContainer(ContainerBuilder builder)
         {
             // IoC Container Module Registration
-            builder.RegisterModule(new AppServiceIoCModule());
+            builder.RegisterModule(new IoCModuleApplicationService());
             builder.RegisterModule(new DummyInfraIoCModule());
         }
 

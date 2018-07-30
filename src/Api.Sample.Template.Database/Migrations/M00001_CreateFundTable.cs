@@ -1,9 +1,9 @@
 ﻿using FluentMigrator;
 
-namespace Api.Sample.Template.Infrastructure.Database.Migrations
+namespace Api.Sample.Template.Database.Migrations
 {
-    [Migration(20180726090000)]
-    public class Migration_20180726090000_CreateInitialTables : Migration
+    [Migration(1)]
+    public class M00001_CreateFundTable : Migration
     {
         public override void Up()
         {

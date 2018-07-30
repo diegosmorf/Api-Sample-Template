@@ -1,7 +1,7 @@
 ﻿using Api.Cqrs.Template.Core.Contract.Repository;
 using System;
 
-namespace Api.Sample.Template.Infrastructure.Database.Repositories
+namespace Api.Sample.Template.Database.Repositories
 {
     public class SQLUnitOfWork : IUnitOfWork
     {

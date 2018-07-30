@@ -3,9 +3,8 @@ using Api.Cqrs.Template.Core.Contract.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
-namespace Api.Sample.Template.Infrastructure.Database.Repositories
+namespace Api.Sample.Template.Database.Repositories
 {
     public class SQLRepository<TEntity> : IRepository<TEntity> where TEntity : IDomainEntity
     {

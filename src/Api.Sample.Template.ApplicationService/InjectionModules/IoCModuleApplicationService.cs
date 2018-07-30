@@ -11,7 +11,7 @@ using Api.Cqrs.Core.CommandHandlers;
 
 namespace Api.Sample.Template.Dummy.ApplicationService.InjectionModules
 {
-    public class AppServiceIoCModule : Module
+    public class IoCModuleApplicationService : Module
     {
         protected override void Load(ContainerBuilder builder)
         {      
@@ -19,13 +19,17 @@ namespace Api.Sample.Template.Dummy.ApplicationService.InjectionModules
             builder.RegisterType<FundAppService>().As<IFundAppService>();
 
             // Domain - EventsHandlers                        
-            builder.RegisterType<FundCreatedEventHandler>().As<IEventHandler<FundCreatedEvent>>();
+            builder.RegisterType<FundCreatedEventHandler>().As<IEventHandler<FundCreatedEvent>>();            
 
             // Domain - CommandsHandlers
             builder.RegisterType<CreateFundCommandHandler>().As<ICommandHandler<CreateFundCommand, Fund>>();
+            builder.RegisterType<UpdateFundCommandHandler>().As<ICommandHandler<UpdateFundCommand, Fund>>();
+            builder.RegisterType<DeleteFundCommandHandler>().As<ICommandHandler<DeleteFundCommand, Fund>>();            
 
             // Domain - Commands
             builder.RegisterType<CreateFundCommand>().AsImplementedInterfaces();
+            builder.RegisterType<UpdateFundCommand>().AsImplementedInterfaces();
+            builder.RegisterType<DeleteFundCommand>().AsImplementedInterfaces();
 
             // Domain - Events
             builder.RegisterType<FundCreatedEvent>().AsImplementedInterfaces();

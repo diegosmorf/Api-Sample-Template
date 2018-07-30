@@ -13,6 +13,7 @@ namespace Api.Sample.Template.Domain.Model
         public IEnumerable<Account> Accounts { get; protected set; }
         public void Create(CreateFundCommand command)
         {
+            Version++;
             Id = Guid.NewGuid();
             Name = command.Name;
             Description = command.Description;
@@ -24,6 +25,7 @@ namespace Api.Sample.Template.Domain.Model
         
         public void Update(UpdateFundCommand command)
         {
+            Version++;
             Name = command.Name;
             Description = command.Description;
             ModifiedDate = DateTime.Now;
@@ -37,5 +39,10 @@ namespace Api.Sample.Template.Domain.Model
             ModifiedBy = command.SenderUserName;
             appliedEvents.Add(new FundDeletedEvent(Id, ModifiedBy));
         }
+
+        //public void AddAccounts(AddAccountToFund command)
+        //{            
+        //    appliedEvents.Add(new AccountAddedToFund((FundId,Id, Name, Description, CreatedDate, ModifiedDate, ModifiedBy));
+        //}
     }
 }

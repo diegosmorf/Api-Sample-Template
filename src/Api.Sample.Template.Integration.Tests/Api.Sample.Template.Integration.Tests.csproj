@@ -27,7 +27,7 @@
     <ProjectReference Include="..\Api.Domain.Contracts.Core\Api.Domain.Contracts.Core.csproj" />
     <ProjectReference Include="..\Api.Sample.Template.ApplicationService\Api.Sample.Template.ApplicationService.csproj" />
     <ProjectReference Include="..\Api.Sample.Template.Domain\Api.Sample.Template.Domain.csproj" />
-    <ProjectReference Include="..\Api.Sample.Template.Dummy.Infrastructure\Api.Sample.Template.Dummy.Infrastructure.csproj" />
+    <ProjectReference Include="..\Api.Sample.Template.Dummy.Infrastructure\Api.Sample.Template.Mock.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
