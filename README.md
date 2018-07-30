@@ -1,4 +1,4 @@
-# App.Crqs.Template
+# Api.Sample.Template
 
 ## Summary
 
