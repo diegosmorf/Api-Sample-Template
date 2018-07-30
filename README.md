@@ -15,14 +15,14 @@ This project Api.Sample.Template cover concepts about:
 
 ## 3rd Party Nuget Packages 
  
+- Autofac
 - AutoMapper
-- MediatR
 - FluentAssertiong
 - FluentMigration
 - FluentValidation
-- Specflow
 - NUnit
 - Selenium
+- Specflow
 - Swagger (Swashbuckle)
  
  
