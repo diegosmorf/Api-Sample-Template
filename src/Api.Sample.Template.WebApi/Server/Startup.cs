@@ -46,7 +46,7 @@ namespace Api.Sample.Template.WebApi.Server
             
             services.AddSwaggerGen(s =>
             {
-                s.SwaggerDoc("v1", new Info { Title = "Api.Sample.Template Swagger Documentation" });
+                s.SwaggerDoc("v1", new Info { Title = "Api.Sample.Template Swagger Documentation", Version = "1.0.0" });
             });
         }
 
